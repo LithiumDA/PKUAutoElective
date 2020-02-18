@@ -8,7 +8,6 @@ __all__ = [
 "AutoElectiveException",
 
     "UserInputException",
-        "NotInCoursePlanException",
 
     "AutoElectiveClientException",
 
@@ -32,6 +31,7 @@ __all__ = [
                 "CaptchaError",
                 "NoAuthInfoError",
                 "SharedSessionError",
+                "NotAgreedToSelectionAgreement",
 
             "TipsException",
                 "ElectionSuccess",
@@ -44,6 +44,7 @@ __all__ = [
                 "MutuallyExclusiveCourseError",
                 "MultiEnglishCourseError",
                 "ExamTimeConflictError",
+                "QuotaLimitedError",
 
 ]
 
@@ -51,11 +52,8 @@ __all__ = [
 class AutoElectiveException(Exception):
     """ Abstract Exception for AutoElective """
 
-class UserInputException(AutoElectiveException):
+class UserInputException(AutoElectiveException, ValueError):
     """ 由于用户的输入数据不当而引发的错误 """
-
-class NotInCoursePlanException(UserInputException):
-    """ csv 内指定的课程不在选课计划内 """
 
 
 class AutoElectiveClientException(AutoElectiveException):
@@ -211,3 +209,7 @@ class MultiEnglishCourseError(TipsException):
 class ExamTimeConflictError(TipsException):
     code = 330
     desc = "考试时间冲突"
+
+class QuotaLimitedError(TipsException):
+    code = 331
+    desc = "该课程选课人数已满。"
